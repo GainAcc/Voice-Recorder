@@ -9,6 +9,7 @@ import android.app.Service
 import android.content.Intent
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.Build
 import android.os.IBinder
 import android.provider.DocumentsContract
 import androidx.core.app.NotificationCompat
@@ -281,10 +282,12 @@ class RecorderService : Service() {
         val label = getString(R.string.app_name)
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         NotificationChannel(channelId, label, NotificationManager.IMPORTANCE_DEFAULT).apply {
             setSound(null, null)
             notificationManager.createNotificationChannel(this)
         }
+            }
 
         val icon = R.drawable.ic_graphic_eq_vector
         val title = label
